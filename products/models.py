@@ -6,7 +6,7 @@ class ProductCategory(models.Model):
     
     class Meta:
         verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name_plural = 'Категорию'
     
     def __str__(self):
         return self.name
