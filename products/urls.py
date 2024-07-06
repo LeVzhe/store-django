@@ -7,4 +7,3 @@ app_name = 'products' #поле обязательное
 urlpatterns = [
     path('', products, name='index'),
 ]
-
