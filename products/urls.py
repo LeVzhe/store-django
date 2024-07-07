@@ -2,8 +2,8 @@ from django.urls import path
 
 from products.views import products
 
-app_name = 'products' #поле обязательное
+APP_NAME = "products"  # поле обязательное
 
 urlpatterns = [
-    path('', products, name='index'),
+    path("", products, name="index"),
 ]
