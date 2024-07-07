@@ -2,7 +2,7 @@ from django.urls import path
 
 from products.views import products
 
-APP_NAME = "products"  # поле обязательное
+app_name = "products"  # поле обязательное
 
 urlpatterns = [
     path("", products, name="index"),
