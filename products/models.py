@@ -1,4 +1,3 @@
-from tkinter import CASCADE
 from django.db import models
 
 from users.models import User
@@ -35,10 +34,20 @@ class Product(models.Model):
 
 
 class Basket(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField(default=0)
-    created_timestamp = models.DateTimeField(auto_now_add=True)
-    
+    user = models.ForeignKey(
+        to=User, on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
+    product = models.ForeignKey(
+        to=Product, on_delete=models.CASCADE, verbose_name="Товар"
+    )
+    quantity = models.PositiveSmallIntegerField(default=0, verbose_name="Количество")
+    created_timestamp = models.DateTimeField(
+        auto_now_add=True, verbose_name="Время создания"
+    )
+
+    class Meta:
+        verbose_name = "Корзина"
+        verbose_name_plural = "Заказы в корзине"
+
     def __str__(self):
-        return f'Корзина для {self.user.email} | Продукт: {self.product.name}'
+        return f"Корзина для {self.user.email} | Продукт: {self.product.name}"
