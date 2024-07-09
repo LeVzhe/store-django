@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductCategory
+from .models import Product, ProductCategory, Basket
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -16,3 +16,11 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ProductCategory, ProductCategoryAdmin)
+
+
+class BasketAdmin(admin.ModelAdmin):
+    list_display = ("user", "product", "quantity", "created_timestamp")
+    list_display_links = ("user", "product")
+
+
+admin.site.register(Basket, BasketAdmin)
