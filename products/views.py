@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .models import Product, ProductCategory, Basket
-from users.models import User
 
 
 def index(request):

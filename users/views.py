@@ -6,6 +6,7 @@ from django.urls import reverse
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from products.models import Basket
 
+
 def login(request):
     if request.method == "POST":
         form = UserLoginForm(data=request.POST)
@@ -27,7 +28,7 @@ def registration(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Поздравляем, вы успешно зарегистрировались!')
+            messages.success(request, "Поздравляем, вы успешно зарегистрировались!")
             return HttpResponseRedirect(reverse("users:login"))
     else:
         form = UserRegistrationForm()
@@ -45,10 +46,17 @@ def profile(request):
             return HttpResponseRedirect(reverse("users:profile"))
         else:
             print(form.errors)
+
     form = UserProfileForm(instance=request.user)
-    context = {"title": "Store - профиль", "form": form, "baskets": Basket.objects.filter(user=request.user)}
+
+    context = {
+        "title": "Store - профиль",
+        "form": form,
+        "baskets": Basket.objects.filter(user=request.user),
+    }
     return render(request, "users/profile.html", context)
+
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse("index"))
