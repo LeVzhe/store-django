@@ -7,4 +7,5 @@ disable = missing-function-docstring,
         line-too-long,
         invalid-str-returned,
         no-member,
-        invalid-name
+        invalid-name,
+        redefined-outer-name
