@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 
 from .models import Product, ProductCategory, Basket
 
-#[---------------------------------------------------------------------------]
+#[--------------------------------ОБРАЗЕЦ------------------------------------]
 class IndexView(TemplateView):
     template_name = "products/index.html"
 
@@ -42,29 +42,6 @@ class ProductsListView(ListView):
         # context["baskets"] = Basket.objects.filter(user=self.get_queryset().filter(user=))
         # context["page_obj"] = page_obj
         return context
-    
-
-# def products(request, category_id=None):
-
-#     products = (
-#         Product.objects.all()
-#         if not category_id or category_id == 7  # костыль
-#         else Product.objects.filter(category_id=category_id)
-#     )
-
-#     per_page = 3
-#     paginator = Paginator(products, per_page)
-#     page_number = request.GET.get("page")
-#     page_obj = paginator.get_page(page_number)
-
-#     context = {
-#         "title": "Store - Каталог",
-#         "categories": ProductCategory.objects.all(),
-#         "page_obj": page_obj,
-#         "baskets": Basket.objects.filter(user=request.user),
-#     }
-
-#     return render(request, "products/products.html", context)
 
 
 @login_required
