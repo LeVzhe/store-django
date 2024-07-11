@@ -12,7 +12,7 @@ def index(request):
     return render(request, "products/index.html", context)
 
 
-def products(request, category_id=None, page_number=1):
+def products(request, category_id=None):
 
     products = (
         Product.objects.all()
@@ -22,12 +22,13 @@ def products(request, category_id=None, page_number=1):
     
     per_page = 3
     paginator = Paginator(products, per_page)
-    products_paginator = paginator.page(page_number)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     context = {
         "title": "Store - Каталог",
         "categories": ProductCategory.objects.all(),
-        "products": products_paginator,
+        "page_obj": page_obj,
         "baskets": Basket.objects.filter(user=request.user),
     }
 
