@@ -11,12 +11,25 @@ def index(request):
     return render(request, "products/index.html", context)
 
 
-def products(request):
+def products(request, category_id=None):
+    # if category_id:
+    #     products = Product.objects.filter(category_id=category_id)
+    # else:
+    #     products = Product.objects.all()
+
+    products = (
+        Product.objects.filter(category_id=category_id)
+        if category_id
+        else Product.objects.all()
+    )
+
     context = {
         "title": "Store - Каталог",
-        "products": Product.objects.all(),
         "categories": ProductCategory.objects.all(),
+        "products": products,
+        "baskets": Basket.objects.filter(user=request.user),
     }
+
     return render(request, "products/products.html", context)
 
 
@@ -33,6 +46,7 @@ def basket_add(request, product_id):
         basket.save()
 
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
 
 @login_required
 def basket_remove(request, basket_id):

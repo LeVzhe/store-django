@@ -57,6 +57,9 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <span class="badge badge-secondary badge-pill">{% if baskets %}{{ baskets.total_quantity }}{% endif %}</span>
+                </li>
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "users:login" %}">Войти <i class="fas fa-sign-in-alt"></i></a>
