@@ -1,6 +1,5 @@
-from django.shortcuts import HttpResponseRedirect
-from django.contrib import auth, messages
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import LoginView
@@ -8,13 +7,14 @@ from django.contrib.auth.views import LoginView
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from products.models import Basket
 from .models import User
+from store.common.views import TitleMixin
 
 
 class UserLoginView(LoginView):
     template_name = "users/login.html"
     form_class = UserLoginForm
     success_url = reverse_lazy("index")
-    
+
 
 # def login(request):
 #     if request.method == "POST":
@@ -32,15 +32,17 @@ class UserLoginView(LoginView):
 #     return render(request, "users/login.html", context)
 
 
-class UserRegistrationView(CreateView):
+class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):
     model = User
     form_class = UserRegistrationForm
     template_name = "users/registration.html"
     success_url = reverse_lazy("users:login")
+    success_message = "Поздравляем, вы успешно зарегистрировались!"
+    title = "Store - Регистрация"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = ("Store - Регистрация",)
+        return context
 
 
 # def registration(request):
@@ -55,18 +57,19 @@ class UserRegistrationView(CreateView):
 #     context = {"form": form}
 #     return render(request, "users/registration.html", context)
 
+
 # @login_required
-class UserProfileView(UpdateView):
+class UserProfileView(TitleMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     template_name = "users/profile.html"
+    title = "Store - Личный кабинет"
 
     def get_success_url(self):
         return reverse_lazy("users:profile", args=(self.object.id,))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Store - Личный кабинет"
         context["baskets"] = (
             Basket.objects.filter(user=self.request.user)
             if self.request.user.is_authenticated
