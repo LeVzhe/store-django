@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse, reverse_lazy
 
@@ -97,6 +97,6 @@ class UserProfileView(UpdateView):
 #     return render(request, "users/profile.html", context)
 
 
-def logout(request):
-    auth.logout(request)
-    return HttpResponseRedirect(reverse("index"))
+# def logout(request):
+#     auth.logout(request)
+#     return HttpResponseRedirect(reverse("index"))
