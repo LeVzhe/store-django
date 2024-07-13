@@ -1,18 +1,23 @@
+from typing import Any
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+# from django.views.generic.edit import CreateView
 
 from .models import Product, ProductCategory, Basket
 
-#[--------------------------------ОБРАЗЕЦ------------------------------------]
+
+# [--------------------------------ОБРАЗЕЦ------------------------------------]
 class IndexView(TemplateView):
     template_name = "products/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Store"
+        context["baskets"] = Basket.objects.filter(user=self.request.user)
         return context
 
 
@@ -21,26 +26,24 @@ class IndexView(TemplateView):
 #         "title": "Store",
 #     }
 #     return render(request, "products/index.html", context)
-#[---------------------------------------------------------------------------]
+# [---------------------------------------------------------------------------]
 
 
 class ProductsListView(ListView):
     model = Product
     template_name = "products/products.html"
     paginate_by = 3
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
-        category_id = self.kwargs.get('category_id')
+        category_id = self.kwargs.get("category_id")
         return queryset.filter(category_id=category_id) if category_id else queryset
-    
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Store - Каталог"
-        context["categories"] = ProductCategory.objects.all()
-        # context["baskets"] = Basket.objects.filter(user=self.get_queryset().filter(user=))
-        # context["page_obj"] = page_obj
+        context["categories"] = ProductCategory.objects.all
+        context["baskets"] = Basket.objects.filter(user=self.request.user)
         return context
 
 
