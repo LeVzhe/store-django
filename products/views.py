@@ -1,10 +1,9 @@
-from typing import Any
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+
 # from django.views.generic.edit import CreateView
 
 from .models import Product, ProductCategory, Basket
@@ -17,7 +16,9 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Store"
-        context["baskets"] = Basket.objects.filter(user=self.request.user)
+        context["baskets"] = (
+            Basket.objects.filter(user=self.request.user) if self.request.user.is_authenticated else []
+        )
         return context
 
 
@@ -43,7 +44,9 @@ class ProductsListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Store - Каталог"
         context["categories"] = ProductCategory.objects.all
-        context["baskets"] = Basket.objects.filter(user=self.request.user)
+        context["baskets"] = (
+            Basket.objects.filter(user=self.request.user) if self.request.user.is_authenticated else []
+        )
         return context
 
 
