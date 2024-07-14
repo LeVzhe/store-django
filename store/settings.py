@@ -12,7 +12,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import EMAIL_BACKEND, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
+from django.conf.global_settings import (
+    EMAIL_BACKEND,
+    LOGIN_REDIRECT_URL,
+    LOGOUT_REDIRECT_URL,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = "http://localhost:8000"
 
 
 # Application definition
@@ -143,4 +147,9 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 # Email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "levzhwork@yandex.ru"
+EMAIL_HOST_PASSWORD = "store-server-password"
+EMAIL_USE_SSL = True
