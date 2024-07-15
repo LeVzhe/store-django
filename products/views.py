@@ -10,7 +10,6 @@ from .models import Basket, Product, ProductCategory
 # from django.views.generic.edit import CreateView
 
 
-
 # [--------------------------------ОБРАЗЕЦ------------------------------------]
 class IndexView(TitleMixin, TemplateView):
     template_name = "products/index.html"
