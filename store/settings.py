@@ -145,5 +145,5 @@ LOGOUT_REDIRECT_URL = "/"
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "levzhwork@yandex.ru"
-EMAIL_HOST_PASSWORD = "store-server-password"
+EMAIL_HOST_PASSWORD = "btodhsmhvikjvcpu"
 EMAIL_USE_SSL = True

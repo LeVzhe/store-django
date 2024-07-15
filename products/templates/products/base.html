@@ -51,9 +51,13 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:logout' %}">
+                            <form action="{% url 'users:logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">Выйти</button>
+                            </form>
+                            {% comment %} <a class="dropdown-item" href="{% url 'users:logout' %}">
                                 Выйти
-                            </a>
+                            </a> {% endcomment %}
                         </li>
                     </ul>
                 </li>
