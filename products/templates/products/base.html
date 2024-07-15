@@ -39,7 +39,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle"></i>
+                        {% if user.image %}
+                            <img width="20" height="20" src="{{ user.image.url }}" style="border-radius: 50%;" class="fas fa-user-circle">
+                        {%else%}
+                            <i class="fas fa-user-circle"></i>
+                        {% endif %}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
