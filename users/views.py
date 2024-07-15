@@ -7,7 +7,6 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.views import LoginView
 
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
-from products.models import Basket
 from store.common.views import TitleMixin
 from .models import User, EmailVerification
 
@@ -72,11 +71,13 @@ class UserProfileView(TitleMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["baskets"] = (
-            Basket.objects.filter(user=self.request.user)
-            if self.request.user.is_authenticated
-            else []
-        )
+        #----Оставлено для примера. Заменено контекст процессором------
+        # context["baskets"] = (
+        #     Basket.objects.filter(user=self.request.user)
+        #     if self.request.user.is_authenticated
+        #     else []
+        # )
+        #--------------------------------------------------------------
         return context
 
 

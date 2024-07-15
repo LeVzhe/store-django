@@ -6,23 +6,14 @@ from django.views.generic.list import ListView
 
 # from django.views.generic.edit import CreateView
 
-from .models import Product, ProductCategory, Basket
 from store.common.views import TitleMixin
+from .models import Product, ProductCategory, Basket
 
 
 # [--------------------------------ОБРАЗЕЦ------------------------------------]
 class IndexView(TitleMixin, TemplateView):
     template_name = "products/index.html"
     title = "Store"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["baskets"] = (
-            Basket.objects.filter(user=self.request.user)
-            if self.request.user.is_authenticated
-            else []
-        )
-        return context
 
 
 # def index(request):
@@ -47,11 +38,6 @@ class ProductsListView(TitleMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = ProductCategory.objects.all
-        context["baskets"] = (
-            Basket.objects.filter(user=self.request.user)
-            if self.request.user.is_authenticated
-            else []
-        )
         return context
 
 
