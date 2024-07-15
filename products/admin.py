@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Product, ProductCategory, Basket
+
+from .models import Basket, Product, ProductCategory
 
 
 class ProductAdmin(admin.ModelAdmin):
