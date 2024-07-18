@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
     "products",
     "users",
 ]
@@ -51,6 +56,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "store.urls"
@@ -73,17 +79,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "store.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
 
 DATABASES = {
     "default": {
@@ -152,9 +147,31 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 # Email
-# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_HOST = "smtp.yandex.ru"
-EMAIL_PORT = 465
-EMAIL_HOST_USER = "levzhwork@yandex.ru"
-EMAIL_HOST_PASSWORD = "btodhsmhvikjvcpu"
-EMAIL_USE_SSL = True
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_HOST = "smtp.yandex.ru"
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = "levzhwork@yandex.ru"
+# EMAIL_HOST_PASSWORD = "btodhsmhvikjvcpu"
+# EMAIL_USE_SSL = True
+
+# OAuth
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     "github": {
+#         "APP": {
+#             "client_id": "Ov23liOQ1p5ozrYFFk4D",
+#             "secret": "2725e817417893533981e60d2749e64bb3f364c8",
+#         },
+#         "SCOPE": [
+#             "user",
+#         ],
+#     },
+# }
