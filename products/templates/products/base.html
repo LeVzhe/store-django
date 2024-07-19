@@ -40,7 +40,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         {% if user.image %}
-                            <img width="20" height="20" src="{{ user.image.url }}" style="border-radius: 50%;" class="fas fa-user-circle">
+                            <img width="20" height="20" src="{{ user.image.url }}" style="border-radius: 50%; border: 1px solid" class="fas fa-user-circle">
                         {%else%}
                             <i class="fas fa-user-circle"></i>
                         {% endif %}
@@ -59,9 +59,6 @@
                                 {% csrf_token %}
                                 <button type="submit" class="dropdown-item">Выйти</button>
                             </form>
-                            {% comment %} <a class="dropdown-item" href="{% url 'users:logout' %}">
-                                Выйти
-                            </a> {% endcomment %}
                         </li>
                     </ul>
                 </li>
