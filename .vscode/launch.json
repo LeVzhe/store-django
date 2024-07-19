@@ -5,7 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Django",
+            "name": "Run Products tests",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test",
+                "products.tests"
+            ],
+            "django": true
+        },
+        {
+            "name": "RUNSERVER DJANGO",
             "type": "debugpy",
             "request": "launch",
             "args": [

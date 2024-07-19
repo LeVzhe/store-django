@@ -8,4 +8,8 @@ disable = missing-function-docstring,
         invalid-str-returned,
         no-member,
         invalid-name,
-        redefined-outer-name
+        redefined-outer-name,
+        unrecognized-option
+
+[MASTER]
+auto-import = 0

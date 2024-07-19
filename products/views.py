@@ -11,6 +11,7 @@ from .models import Basket, Product, ProductCategory
 
 
 # [--------------------------------ОБРАЗЕЦ------------------------------------]
+
 class IndexView(TitleMixin, TemplateView):
     template_name = "products/index.html"
     title = "Store"
