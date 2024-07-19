@@ -168,7 +168,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 #     "github": {
 #         "APP": {
 #             "client_id": "Ov23liOQ1p5ozrYFFk4D",
-#             "secret": "2725e817417893533981e60d2749e64bb3f364c8",
+#             "secret": "2725e817417893533981e60d2749e64bb3f364c8", не верно, поменять на верный
 #         },
 #         "SCOPE": [
 #             "user",
