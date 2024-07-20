@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run USER tests",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test",
+                "users.tests"
+            ],
+            "django": true
+        },
+        {
             "name": "Run Products tests",
             "type": "debugpy",
             "request": "launch",
