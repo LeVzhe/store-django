@@ -53,5 +53,9 @@
         "test*.py"
     ],
     "python.testing.pytestEnabled": false,
-    "python.testing.unittestEnabled": true
+    "python.testing.unittestEnabled": true,
+    "workbench.colorCustomizations": {
+        "tab.activeBackground": "#7a3700",
+        "tab.activeBorder": "#17ff02",
+    }
 }
