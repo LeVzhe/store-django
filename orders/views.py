@@ -1,14 +1,12 @@
-from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 
-# from django.views.generic.edit import CreateView
-
-# from django.urls import reverse, reverse_lazy
+from orders.forms import OrderForm
 
 
-class OrderCreateView(TemplateView):
+class OrderCreateView(CreateView):
     template_name = "orders/order-create.html"
+    form_class = OrderForm
     # model = User
-    # form_class = UserRegistrationForm
     # success_url = reverse_lazy("users:login")
     # success_message = "Поздравляем, вы успешно зарегистрировались!"
     # title = "Store - Регистрация"
