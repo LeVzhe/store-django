@@ -17,4 +17,3 @@ class OrderCreateView(TitleMixin, CreateView):
 
     # model = User
     # success_message = "Поздравляем, вы успешно зарегистрировались!"
-    # title = "Store - Регистрация"
