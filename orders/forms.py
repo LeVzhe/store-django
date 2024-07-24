@@ -19,11 +19,11 @@ class OrderForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "placeholder": "Беларусь, Минск, ул. Казинца, дом 76",
+                "placeholder": "Россия, Москва, ул. Мира, дом 6",
             }
         )
     )
 
     class Meta:
         model = Order
-        fields = ["first_name", "last_name", "email", "address"]
+        fields = ("first_name", "last_name", "email", "address")
