@@ -10,10 +10,10 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
+from store.common.views import TitleMixin
 from orders.forms import OrderForm
 from orders.models import Order
 from products.models import Basket
-from store.common.views import TitleMixin
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -24,7 +24,7 @@ class SuccessTemplateView(TitleMixin, TemplateView):
 
 
 class CanceledTemplateView(TemplateView):
-    template_name = "orders/canceled.html"
+    template_name = "orders/cancled.html"
 
 
 class OrderListView(TitleMixin, ListView):
@@ -43,7 +43,7 @@ class OrderDetailView(DetailView):
     model = Order
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
         context["title"] = f"Store - Заказ #{self.object.id}"
         return context
 
@@ -57,7 +57,6 @@ class OrderCreateView(TitleMixin, CreateView):
     def post(self, request, *args, **kwargs):
         super(OrderCreateView, self).post(request, *args, **kwargs)
         baskets = Basket.objects.filter(user=self.request.user)
-
         checkout_session = stripe.checkout.Session.create(
             line_items=baskets.stripe_products(),
             metadata={"order_id": self.object.id},
@@ -79,7 +78,6 @@ class OrderCreateView(TitleMixin, CreateView):
 @csrf_exempt
 def stripe_webhook_view(request):
     payload = request.body
-
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
     event = None
 
@@ -87,26 +85,30 @@ def stripe_webhook_view(request):
         event = stripe.Webhook.construct_event(
             payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
         )
-    except ValueError as e:
+    except ValueError:
         # Invalid payload
-        print(e)
         return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError as e:
+    except stripe.error.SignatureVerificationError:
         # Invalid signature
-        print(e)
         return HttpResponse(status=400)
 
+    # Handle the checkout.session.completed event
     if (
         event["type"] == "checkout.session.completed"
         or event["type"] == "checkout.session.async_payment_succeeded"
     ):
-        session = event["data"]["object"]
-        fulfill_order(session)
+        fulfill_checkout(event["data"]["object"]["id"])
 
+    # Passed signature verification
     return HttpResponse(status=200)
 
 
-def fulfill_order(session):
-    order_id = int(session.metadata.order_id)
-    order = Order.objects.get(id=order_id)
-    order.update_after_payment()
+def fulfill_checkout(session_id):
+    checkout_session = stripe.checkout.Session.retrieve(
+        session_id,
+        expand=["line_items"],
+    )
+    if checkout_session.payment_status != "unpaid":
+        order_id = int(checkout_session.metadata.order_id)
+        order = Order.objects.get(id=order_id)
+        order.update_after_payment()
