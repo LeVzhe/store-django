@@ -4,7 +4,15 @@ from .models import Basket, Product, ProductCategory
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "price", "quantity", "image", "category")
+    list_display = (
+        "name",
+        "description",
+        "price",
+        "quantity",
+        "stripe_product_price_id",
+        "image",
+        "category",
+    )
     list_display_links = ("name", "category")
 
 
