@@ -42,7 +42,7 @@ class OrderDetailView(DetailView):
     template_name = "orders/order.html"
     model = Order
 
-    def get_context_data(self, **kwargs: reverse_lazy):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = f"Store - Заказ #{self.object.id}"
         return context
