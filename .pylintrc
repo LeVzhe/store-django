@@ -9,7 +9,8 @@ disable = missing-function-docstring,
         no-member,
         invalid-name,
         redefined-outer-name,
-        unrecognized-option
+        unrecognized-option,
+        consider-using-f-string,
 
 [MASTER]
 auto-import = 0
