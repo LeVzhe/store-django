@@ -2,6 +2,9 @@ from http import HTTPStatus
 
 import stripe
 
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
@@ -40,6 +43,7 @@ class OrderCreateView(TitleMixin, CreateView):
                     "quantity": 1,
                 },
             ],
+            metadata={"order_id": self.object.id},
             mode="payment",
             success_url="{}{}".format(
                 settings.DOMAIN_NAME, reverse("orders:order_success")
@@ -54,5 +58,37 @@ class OrderCreateView(TitleMixin, CreateView):
         form.instance.initiator = self.request.user
         return super(OrderCreateView, self).form_valid(form)
 
-    # model = User
-    # success_message = "Поздравляем, вы успешно зарегистрировались!"
+
+@csrf_exempt
+def stripe_webhook_view(request):
+    payload = request.body
+
+    sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError as e:
+        # Invalid payload
+        print(e)
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        print(e)
+        return HttpResponse(status=400)
+
+    if (
+        event["type"] == "checkout.session.completed"
+        or event["type"] == "checkout.session.async_payment_succeeded"
+    ):
+        session = event["data"]["object"]
+        fulfill_order(session)
+
+    return HttpResponse(status=200)
+
+
+def fulfill_order(session):
+    order_id = int(session.metadata.order_id)
+    print("fullfilling order")
