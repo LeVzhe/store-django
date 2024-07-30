@@ -2,3 +2,4 @@
 .cache_ggshield
 .flake8
 .pylintrc
+.env

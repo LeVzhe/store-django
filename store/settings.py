@@ -89,10 +89,15 @@ INTERNAL_IPS = [
     "localhost",
 ]
 
+# Redis
+REDIS_HOST = "127.0.0.1"
+REDIS_PORT = "6379"
+
+# CACHE
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
@@ -198,11 +203,13 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 
 # Celery
 
-CELERY_BROKER_URL = "redis://127.0.0.1:6379"
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}"
+CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}"
 
 # stripe
 
 STRIPE_PUBLIC_KEY = "pk_test_51PgWPe2MIJrlw0l13ySpTvttykPnGAoCevwzspHCjI9ycGW1NUPY2eUp4asckWkL29p9tXmYv9ocNXdrYFpLnwcs009LHnwrIl"
 STRIPE_SECRET_KEY = "sk_test_51PgWPe2MIJrlw0l1M4nZXDj8dxF6wCiSCV6fFppgD1vPpzbjVEmsq7QLB6BCW6pnCwJvPDSbmQxqebMCwvwBE2on00uVJIbW8Q"
-STRIPE_WEBHOOK_SECRET = "whsec_c0d4cecf48ebd43ba9a359607fbe9c81f92049686acd8e866e77f1c7fa0cc265"
+STRIPE_WEBHOOK_SECRET = (
+    "whsec_c0d4cecf48ebd43ba9a359607fbe9c81f92049686acd8e866e77f1c7fa0cc265"
+)
