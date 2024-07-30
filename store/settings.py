@@ -70,11 +70,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.humanize",
+    #
+    "django_extensions",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.github",
     "debug_toolbar",
+    #
     "products",
     "orders",
     "users",
