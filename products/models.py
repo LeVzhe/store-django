@@ -24,10 +24,12 @@ class Product(models.Model):
     description = models.TextField(verbose_name="Описание")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     quantity = models.PositiveIntegerField(default=0, verbose_name="Количество")
-    image = models.ImageField(upload_to="products_images", verbose_name="Картинка")
     stripe_product_price_id = models.CharField(max_length=128, null=True, blank=True)
     category = models.ForeignKey(
         to=ProductCategory, on_delete=models.CASCADE, verbose_name="Категория"
+    )
+    image = models.ImageField(
+        upload_to="products_images", verbose_name="Картинка", null=True, blank=True
     )
 
     class Meta:
