@@ -19,3 +19,9 @@ class BasketModelViewSet(ModelViewSet):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
     permission_classes = (IsAuthenticated,)
+    pagination_class = None
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        return queryset.filter(user=self.request.user)
