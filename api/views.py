@@ -1,3 +1,5 @@
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
@@ -23,5 +25,24 @@ class BasketModelViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
+
         return queryset.filter(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        try:
+            product_id = request.data["product_id"]
+            products = Product.objects.filter(id=product_id)
+            if not products.exists():
+                return Response(
+                    {"product_id": "Данный объект не существует"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            obj, is_created = Basket.create_or_opdate(product_id, self.request.user)
+            status_code = status.HTTP_201_CREATED if is_created else status.HTTP_200_OK
+            serializer = self.get_serializer(obj)
+            return Response(serializer.data, status=status_code)
+        except KeyError:
+            return Response(
+                {"product_id": "Это поле обязательно"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )

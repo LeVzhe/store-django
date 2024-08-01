@@ -24,7 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class BasketSerializer(serializers.ModelSerializer):
 
     product = ProductSerializer()
-    sum = fields.FloatField()
+    sum = fields.FloatField(required=False)
     total_sum = fields.SerializerMethodField()
     total_quantity = fields.SerializerMethodField()
 
@@ -43,6 +43,6 @@ class BasketSerializer(serializers.ModelSerializer):
 
     def get_total_sum(self, obj):
         return Basket.objects.filter(user_id=obj.user.id).total_sum()
-    
+
     def get_total_quantity(self, obj):
         return Basket.objects.filter(user_id=obj.user.id).total_quantity()
