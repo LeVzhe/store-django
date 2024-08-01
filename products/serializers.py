@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from products.models import Product, ProductCategory
+from products.models import Product, ProductCategory, Basket
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -19,3 +19,15 @@ class ProductSerializer(serializers.ModelSerializer):
             "image",
             "category",
         )
+
+
+class BasketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Basket
+        fields = (
+            "id",
+            "product",
+            "quantity",
+            "created_timestamp",
+        )
+        read_only_fields = ("created_timestamp",)
